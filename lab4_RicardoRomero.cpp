@@ -2,9 +2,13 @@
 
 using namespace std;
 
-int*** crear(int);
+int*** crearMatriz(int);
 
 void freeMatrix(int***, int);
+
+void printMatriz(int*** , int, int);
+
+void ejer2();
 
 int main() {
 	
@@ -21,6 +25,7 @@ int main() {
 			case 1:
 				break;
 			case 2: 
+				ejer2();
 				break;
 			case 3:
 				break;
@@ -29,22 +34,22 @@ int main() {
 				break;	
 		}
 
-	}while(opcion != 3);
+	}while(opcion != 4);
 }
 
-int*** crear(int n) {
+int*** crearMatriz(int size) {
 	
-	int*** tablero = new int** [n];
-	for(int i = 0; i < n; i++) {
-		tablero[i] = new int* [n];
+	int*** matriz = new int** [size];
+	for(int i = 0; i < size; i++) {
+		matriz[i] = new int*[3];
 	}
 
-	for(int i = 0; i < 3; i++) {
-		for(int j = 0; j < n; j++) {
-			tablero[i][j] = NULL;
+	for(int i = 0; i < size; i++) {
+		for(int j = 0; j < 3; j++) {
+			matriz[i][j] = new int [size];
 		}
 	}
-	return tablero;
+	return matriz;
 }
 
 void freeMatrix(int*** matrix, int size) {
@@ -62,5 +67,41 @@ void freeMatrix(int*** matrix, int size) {
 }
 
 void ejer2() {
+	int gradpoli,a, valor;
+	int size = 5;
+	int*** mainmatrix = crearMatriz(size);
+
+	cout<<"Ingrese el grado mas alto: "<<endl;
+	cin>> gradpoli;
+	cout<<"Ingrese a; "<<endl;
+	cin>> a;
+
+	for(int i = 0; i < gradpoli + 1; i++) {
+		cout<<"Ingrese el valor de x^"<<i<<endl;
+		cin>> valor;
+		mainmatrix[0][0][i] = valor;
+		valor = 0;
+		mainmatrix[0][2][0] = mainmatrix[0][0][0];
+		mainmatrix[0][1][1] = mainmatrix[0][2][0] * a;
+		mainmatrix[0][2][1] = mainmatrix[0][0][1] + mainmatrix[0][1][1];
+	}
 	
+	printMatriz(mainmatrix, gradpoli, a);
+
+
+	
+	
+}
+
+void printMatriz(int*** matrix, int size, int a) {
+	for(int i = 0; i < size + 1; i++) {
+		for(int j = 0; j < 3; j++) {
+			for(int k = 0; k < size + 1; k++) {
+				cout<<"["<<matrix[i][j][k]<<"]";
+			}
+				cout<<"|"<<a<<endl;
+		}
+		cout<<endl;
+	}
+
 }
